@@ -1,0 +1,10 @@
+<view>
+  <view class="img-list">
+    <block wx:for="{{scenesInfo}}" wx:key="{{index}}">
+      <view class="img-item">
+        <image src="{{item.url}}" wx:if="{{!item.isVideo}}" class="img"/>
+        <video src="{{item.url}}" wx:else class="video"/>
+      </view>
+    </block>
+  </view>
+</view>

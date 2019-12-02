@@ -1,0 +1,44 @@
+.card-box {
+  display: flex;
+  justify-content: space-between;
+	color: #dedcee;
+	/* color: #c9d6de; */
+	line-height: 1.5;
+  height: 400rpx;
+  border-radius: 7px;
+  margin: 10rpx 10rpx;
+  /* background: linear-gradient(to bottom right,#333,#e3b3af); */
+  background: linear-gradient(to bottom right, #c0c0c0, #333);
+}
+
+.card-logo {
+  flex: 1;
+}
+
+.card-info {
+  flex: 1;
+}
+
+.logo-view {
+  height: 200rpx;
+  width: 200rpx;
+  margin: 30rpx auto;
+  border-radius: 50%;
+	overflow: hidden;
+}
+
+.logo {
+	height: 200rpx;
+  width: 200rpx;
+}
+
+.phone-view{
+	padding-left: 20%;
+}
+
+.info-title{
+	font-weight: bold;
+	font-size: 48rpx;
+	text-align: center;
+	margin: 95rpx 0;
+}

@@ -1,0 +1,20 @@
+<view>
+  <view class="card-box" wx:if="{{userInfo.phone}}">
+    <view class="card-logo">
+      <view class="logo-view">
+        <image src="{{userInfo.logoUrl}}" class="logo"/>
+      </view>
+      <view class="phone-view">
+        <text>姓名: {{userInfo.userName}}\n</text>
+        <text>手机: {{userInfo.phone}}</text>
+      </view>
+    </view>
+    <view class="card-info">
+      <view class="info-title">小畅家居</view>
+      <view class="info-addr">
+        <text>地址: {{userInfo.addr}}\n</text>
+        <text>地址: {{userInfo.website}}</text>
+      </view>
+    </view>
+  </view>
+</view>

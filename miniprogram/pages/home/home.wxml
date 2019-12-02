@@ -1,0 +1,18 @@
+<view>
+  <view class="scenes-box">
+
+    <view class="scenes-title">系列分类</view>
+
+    <view class="scenes-list">
+      <block wx:for="{{scenesList}}" wx:key="{{index}}">
+				<view class="scenes-item">
+					<view class="scenes-item-title">{{item.title}}</view>
+					<view class="scenes-item-img">
+						<image src="{{item.imgs[0]}}" bindtap="doScenesInfo" data-id="{{item._id}}"></image>
+					</view>
+				</view>
+      </block>
+    </view>
+
+  </view>
+</view>
