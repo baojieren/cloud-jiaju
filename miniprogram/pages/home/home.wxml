@@ -8,7 +8,7 @@
 				<view class="scenes-item">
 					<view class="scenes-item-title">{{item.title}}</view>
 					<view class="scenes-item-img">
-						<image src="{{item.imgs[0]}}" bindtap="doScenesInfo" data-id="{{item._id}}"></image>
+						<image src="{{item.imgs[0]}}" bindtap="doScenesInfo" data-id="{{item._id}}" lazy-load></image>
 					</view>
 				</view>
       </block>

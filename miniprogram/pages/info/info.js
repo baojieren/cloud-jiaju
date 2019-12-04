@@ -83,5 +83,14 @@ Page({
         scenesInfo: scenes
       })
     })
+  },
+
+  DoViewImg(event) {
+		console.log(event)
+    var urlArr = this.data.scenesInfo.map(scenes => scenes.url);
+    wx.previewImage({
+			current: event.currentTarget.dataset.src,
+			urls: urlArr
+    })
   }
 })

@@ -1,0 +1,7 @@
+<view>
+  <view class="cu-list grid col-2">
+    <view class="cu-item" wx:for="{{scenesList}}" wx:key="{{index}}">
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+</view>

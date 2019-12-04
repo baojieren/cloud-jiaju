@@ -1,18 +1,36 @@
-// pages/home/home.js
+// pages/scenes/scenes.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    scenesList: []
+    scenesList: [{
+      _id: 'cardboardfill',
+      title: 'VR'
+    }, {
+      icon: 'recordfill',
+      color: 'orange',
+      badge: 1,
+      name: '录像'
+    }, {
+      icon: 'picfill',
+      color: 'yellow',
+      badge: 0,
+      name: '图像'
+    }, {
+      icon: 'noticefill',
+      color: 'olive',
+      badge: 22,
+      name: '通知'
+    }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    this.getScenesList();
   },
 
   /**
@@ -26,7 +44,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getScenesList()
+
   },
 
   /**
@@ -65,25 +83,16 @@ Page({
   },
 
   /**
-   * 获取所有有效的系列列表
+   * 获取所有系列
    */
   getScenesList() {
     const scenesDB = wx.cloud.database().collection('t_scenes');
     scenesDB.where({
-      valid: 1
+
     }).get().then(res => {
       this.setData({
         scenesList: res.data
       })
     })
   },
-
-  /**
-   * 导航到系列详情页
-   */
-  doScenesInfo(event) {
-    wx.navigateTo({
-      url: '/pages/info/info?id=' + event.currentTarget.dataset.id,
-    })
-  }
 })

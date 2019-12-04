@@ -2,7 +2,7 @@
   <view class="img-list">
     <block wx:for="{{scenesInfo}}" wx:key="{{index}}">
       <view class="img-item">
-        <image src="{{item.url}}" wx:if="{{!item.isVideo}}" class="img"/>
+        <image src="{{item.url}}" wx:if="{{!item.isVideo}}" center lazy-load class="img" data-src="{{item.url}}" bindtap="DoViewImg"/>
         <video src="{{item.url}}" wx:else class="video"/>
       </view>
     </block>

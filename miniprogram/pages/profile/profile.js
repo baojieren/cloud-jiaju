@@ -11,7 +11,8 @@ Page({
       phone: '',
       addr: '',
       website: ''
-    }
+    },
+    admin: true
   },
 
   /**
@@ -74,12 +75,12 @@ Page({
    * 那profile信息
    */
   getProfile() {
-		const userDB = wx.cloud.database().collection('t_user');
-    
-		userDB.doc('9aac4824-201e-46cf-bd7a-66857d6058d9').get({
+    const userDB = wx.cloud.database().collection('t_user');
+
+    userDB.doc('9aac4824-201e-46cf-bd7a-66857d6058d9').get({
       success: res => {
         this.setData({
-					userInfo: res.data
+          userInfo: res.data
         })
       },
       fail: err => {
@@ -89,6 +90,24 @@ Page({
         })
         console.error('[数据库] [查询记录] 失败：', err)
       }
+    })
+  },
+
+  /**
+   * 跳转到所有系列列表页
+   */
+  do2AllScenes() {
+    wx.navigateTo({
+      url: '/pages/scenes/scenes',
+    })
+  },
+
+  /**
+   * 跳转到编辑页面
+   */
+  do2EditScenes() {
+    wx.navigateTo({
+      url: '/pages/edit/edit',
     })
   }
 })

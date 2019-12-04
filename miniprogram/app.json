@@ -2,7 +2,9 @@
 	"pages": [
 		"pages/home/home",
 		"pages/info/info",
-		"pages/profile/profile"
+		"pages/profile/profile",
+		"pages/scenes/scenes",
+		"pages/edit/edit"
 	],
 	"window": {
 		"backgroundColor": "#ac9975",
@@ -13,8 +15,8 @@
 		"enablePullDownRefresh": true
 	},
 	"tabBar": {
-		"color": "#ac9975",
-		"selectedColor": "#ccc",
+		"color": "#ccc",
+		"selectedColor": "#ac9975",
 		"list": [
 			{
 				"pagePath": "pages/home/home",
