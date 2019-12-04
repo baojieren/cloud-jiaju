@@ -8,63 +8,31 @@ Page({
     title: '',
     remark: '',
     imgs: [],
-    cloudFileIds: []
+    cloudFileIds: [],
+    deleteImgs: [], //编辑时删除的图片文件
+    enableDel: false,
+    enableUpdate: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    if (options.id) {
+      let imgArr = options.imgs.split(',');
+      this.setData({
+        id: options.id,
+        title: options.title,
+        remark: options.remark,
+        imgs: imgArr,
+        cloudFileIds: imgArr,
+        valid: options.valid,
+        enableDel: true,
+        enableUpdate: true
+      })
+    }
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+		console.log(this.data.cloudFileIds)
   },
 
   /**
@@ -110,6 +78,10 @@ Page({
       confirmText: '删除',
       success: res => {
         if (res.confirm) {
+					if(this.data.enableUpdate){
+						this.data.deleteImgs.push(this.data.imgs[e.currentTarget.dataset.index])
+						this.data.cloudFileIds.splice(e.currentTarget.dataset.index, 1);	
+					}
           this.data.imgs.splice(e.currentTarget.dataset.index, 1);
           this.setData({
             imgs: this.data.imgs
@@ -141,9 +113,9 @@ Page({
    * 保存
    */
   DoSave() {
-		wx.showLoading({
-			title: '保存中',
-		});
+    wx.showLoading({
+      title: '保存中',
+    });
 
     let that = this;
 
@@ -157,6 +129,7 @@ Page({
             resolve(res.fileID)
           },
           fail: err => {
+            console.log(err)
             reject(err)
           },
           complete: () => {
@@ -167,7 +140,15 @@ Page({
     }
 
     async function upLoadAll() {
-      for (var img of that.data.imgs) {
+      // 把已经上传过的图片过滤掉
+      let uploadImgs = [];
+      that.data.imgs.forEach(img => {
+        if (!img.startsWith('cloud')) {
+          uploadImgs.push(img)
+        }
+      })
+
+      for (var img of uploadImgs) {
         let fileId = await uploadImg(img);
         that.setData({
           cloudFileIds: that.data.cloudFileIds.concat(fileId)
@@ -176,23 +157,80 @@ Page({
 
       // 上面 同步 完成后,保存系列信息
       let scenesDB = wx.cloud.database().collection('t_scenes');
-      scenesDB.add({
-        data: {
-          title: that.data.title,
-          remark: that.data.remark,
-          imgs: that.data.cloudFileIds,
-          valid: 1
-        },
-        success: () => {
-          wx.hideLoading();
-					wx.navigateTo({
-						url: '/pages/home/home',
-					})
-        }
+
+      // 添加
+      if (that.data.enableUpdate) {
+        scenesDB.doc(that.data.id).update({
+          data: {
+            title: that.data.title,
+            remark: that.data.remark,
+            imgs: that.data.cloudFileIds,
+            valid: parseInt(that.data.valid)
+          },
+          success: () => {
+            wx.hideLoading();
+          }
+        })
+      } else {
+        // 更新
+        scenesDB.add({
+          data: {
+            title: that.data.title,
+            remark: that.data.remark,
+            imgs: that.data.cloudFileIds,
+            valid: 1
+          },
+          success: () => {
+            wx.hideLoading();
+          }
+        })
+      }
+
+      // 删除图片
+      if (that.data.deleteImgs.length > 0) {
+        wx.cloud.deleteFile({
+          fileList: that.data.deleteImgs
+        }).then(res => {
+          console.log('有图片被删除')
+        })
+      }
+
+      wx.switchTab({
+        url: '/pages/home/home',
       })
     }
     // 调用方法
     upLoadAll();
-  }
+  },
 
+  /**
+   * 删除
+   */
+  DoDelete(event) {
+    wx.showModal({
+      title: '确定删除吗?',
+      content: '',
+      cancelText: '不删除',
+      confirmText: '删除',
+      success: res => {
+        if (res.confirm) {
+          let scenesDB = wx.cloud.database().collection('t_scenes');
+          scenesDB.doc(this.data.id).remove({
+              success: (res) => {
+
+              }
+            }),
+
+            // 删除图片
+            wx.cloud.deleteFile({
+              fileList: this.data.imgs
+            }).then(res => {
+              wx.switchTab({
+                url: '/pages/home/home',
+              })
+            })
+        }
+      }
+    })
+  }
 })

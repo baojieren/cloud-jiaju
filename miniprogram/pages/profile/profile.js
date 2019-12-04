@@ -1,4 +1,5 @@
 // pages/profile/profile.js
+const app = getApp();
 Page({
 
   /**
@@ -12,14 +13,43 @@ Page({
       addr: '',
       website: ''
     },
-    admin: true
+    admin: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // 查询profile的信息
     this.getProfile();
+
+    // 调用登录云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {}
+    }).then(res => {
+      app.globalData.openid = res.result.openid
+
+      // 拿openid查询是否是admin
+      let userDB = wx.cloud.database().collection('t_user');
+      userDB.where({
+        oid: res.result.openid
+      }).get().then(res => {
+        if (res.data.length > 0) {
+          this.setData({
+						admin: res.data[0].admin
+          })
+        }
+      }).catch(err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      })
+    }).catch(err => {
+      console.log('调用云登录函数失败:', err)
+    })
   },
 
   /**
@@ -75,7 +105,7 @@ Page({
    * 那profile信息
    */
   getProfile() {
-    const userDB = wx.cloud.database().collection('t_user');
+    let userDB = wx.cloud.database().collection('t_user');
 
     userDB.doc('9aac4824-201e-46cf-bd7a-66857d6058d9').get({
       success: res => {

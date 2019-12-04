@@ -24,4 +24,8 @@
       <button class="cu-btn bg-white margin-tb-sm lg" bindtap="do2EditScenes">新增系列</button>
     </view>
   </view>
+
+  <view wx:if="{{!userInfo.phone}}">
+    <view class="shenghe">本小程序只是展示家居设计风格图片\n不涉及任何商业行为</view>
+  </view>
 </view>

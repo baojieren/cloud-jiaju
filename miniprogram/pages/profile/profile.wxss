@@ -47,3 +47,9 @@
 	display: flex;
   margin: 10epx 10rpx;
 }
+
+.shenghe{
+	text-align: center;
+	font-size: 48rpx;
+	
+}

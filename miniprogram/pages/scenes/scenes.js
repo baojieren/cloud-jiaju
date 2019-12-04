@@ -5,25 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    scenesList: [{
-      _id: 'cardboardfill',
-      title: 'VR'
-    }, {
-      icon: 'recordfill',
-      color: 'orange',
-      badge: 1,
-      name: '录像'
-    }, {
-      icon: 'picfill',
-      color: 'yellow',
-      badge: 0,
-      name: '图像'
-    }, {
-      icon: 'noticefill',
-      color: 'olive',
-      badge: 22,
-      name: '通知'
-    }]
+    scenesList: []
   },
 
   /**
@@ -95,4 +77,19 @@ Page({
       })
     })
   },
+
+  /**
+   * 跳转到edit页面
+   */
+  doEdit(event) {
+    let id = event.currentTarget.dataset.id;
+    let title = event.currentTarget.dataset.title;
+    let remark = event.currentTarget.dataset.remark;
+    let imgs = event.currentTarget.dataset.imgs;
+    let valid = event.currentTarget.dataset.valid;
+    let url = `/pages/edit/edit?id=${id}&title=${title}&remark=${remark}&imgs=${imgs}&valid=${valid}`
+    wx.navigateTo({
+      url: url
+    })
+  }
 })

@@ -2,11 +2,11 @@
   <form>
     <view class="cu-form-group">
       <view class="title">系列名称:</view>
-      <input id="title" placeholder="必填" bindinput="DoInput"></input>
+      <input id="title" placeholder="必填" bindinput="DoInput" value="{{title}}"></input>
     </view>
     <view class="cu-form-group">
       <view class="title">系列描述:</view>
-      <input id="remark" placeholder="选填" bindinput="DoInput"></input>
+      <input id="remark" placeholder="选填" bindinput="DoInput" value="{{remark}}"></input>
     </view>
 
     <view class="cu-bar bg-white margin-top">
@@ -34,7 +34,7 @@
 
     <view class="padding flex flex-direction">
       <button class="cu-btn bg-grey lg" bindtap="DoSave">保存</button>
-      <button class="cu-btn bg-red margin-tb-sm lg" bindtap="DoDelete">删除</button>
+      <button class="cu-btn bg-red margin-tb-sm lg" bindtap="DoDelete" wx:if="{{enableDel}}">删除</button>
     </view>
   </form>
 </view>

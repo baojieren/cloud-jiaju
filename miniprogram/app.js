@@ -16,6 +16,7 @@ App({
     }
 
     this.globalData = {
+			openid:'',
       baseUrl: "https://api.baojie.ink/"
     }
   },

@@ -11,8 +11,7 @@
 		"backgroundTextStyle": "dark",
 		"navigationBarBackgroundColor": "#ac9975",
 		"navigationBarTitleText": "小畅家居",
-		"navigationBarTextStyle": "white",
-		"enablePullDownRefresh": true
+		"navigationBarTextStyle": "white"
 	},
 	"tabBar": {
 		"color": "#ccc",
